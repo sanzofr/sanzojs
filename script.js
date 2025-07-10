@@ -90,7 +90,7 @@
             Object.assign(cursor.style, stylePresets[style]);
         }
 
-        document.body.appendChild(cursor);
+        document.body.prepend(cursor);
 
         window.addEventListener("mousemove", (e) => {
             gsap.to(cursor, {

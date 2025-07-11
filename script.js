@@ -123,27 +123,30 @@
 
 
 
-    function magnetbutton(a) {
-        const button = document.querySelectorAll(a);
+    function magnetbutton(selector) {
+  const buttons = document.querySelectorAll(selector);
 
-        document.addEventListener('mousemove', (e) => {
-            const rect = button.getBoundingClientRect();
+  document.addEventListener("mousemove", (e) => {
+    buttons.forEach((button) => {
+      const rect = button.getBoundingClientRect();
 
-            const btnX = rect.left + rect.width / 2;
-            const btnY = rect.top + rect.height / 2;
+      const btnX = rect.left + rect.width / 2;
+      const btnY = rect.top + rect.height / 2;
 
-            const distX = e.clientX - btnX;
-            const distY = e.clientY - btnY;
+      const distX = e.clientX - btnX;
+      const distY = e.clientY - btnY;
 
-            const maxDist = 100;
+      const maxDist = 100;
 
-            if (Math.abs(distX) < maxDist && Math.abs(distY) < maxDist) {
-                button.style.transform = `translate(${distX * 0.3}px, ${distY * 0.3}px)`;
-            } else {
-                button.style.transform = `translate(0px, 0px)`;
-            }
-        });
-    }
+      if (Math.abs(distX) < maxDist && Math.abs(distY) < maxDist) {
+        button.style.transform = `translate(${distX * 0.3}px, ${distY * 0.3}px)`;
+      } else {
+        button.style.transform = `translate(0px, 0px)`;
+      }
+    });
+  });
+}
+
 
 
     global.sanzo = global.sanzo || {};

@@ -84,7 +84,7 @@
   Object.assign(cursor.style, {
     width,
     height,
-    position: "fixed", // fixed to avoid scroll issues
+    position: "fixed",
     zIndex: 9999,
     pointerEvents: "none",
     left: "0px",
@@ -102,19 +102,25 @@
   if (!container) return console.warn(`[mousefollow] wrapper "${wrapper}" not found.`);
 
   let mouse = { x: 0, y: 0 };
+  let pos = { x: 0, y: 0 };
 
   container.addEventListener("mousemove", (e) => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
   });
 
+  // Animate smoothly toward target
   gsap.ticker.add(() => {
+    pos.x += (mouse.x - pos.x) * 0.15;
+    pos.y += (mouse.y - pos.y) * 0.15;
+
     gsap.set(cursor, {
-      x: mouse.x,
-      y: mouse.y,
+      x: pos.x,
+      y: pos.y,
     });
   });
 }
+
 
 
     function magnetbutton(a) {

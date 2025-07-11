@@ -50,56 +50,72 @@
         });
     }
 
-    function mousefollow({ width = "20px", height = "20px", color = "#000", style = 1, wrapper = "#main", } = {}) {
-        if (document.querySelector(".cursor")) return;
+   function mousefollow({
+  width = "20px",
+  height = "20px",
+  color = "#000",
+  style = 1,
+  wrapper = "body",
+} = {}) {
+  if (document.querySelector(".cursor")) return;
 
-        const cursor = document.createElement("div");
-        cursor.className = "cursor";
+  const cursor = document.createElement("div");
+  cursor.className = "cursor";
 
-        const stylePresets = {
-            1: {
-                borderRadius: "50%",
-                backgroundColor: color,
-                mixBlendMode: "difference",
-                boxShadow: "0 0 10px rgba(0,0,0,0.2)"
-            },
-            2: {
-                borderRadius: "50%",
-                backgroundColor: "transparent",
-                border: `1px solid ${color}`,
-                backdropFilter: "blur(2px)",
-            },
-            3: {
-                borderRadius: "50%",
-                backgroundImage: `radial-gradient(${color} 30%, transparent 70%)`,
-            },
-        };
+  const stylePresets = {
+    1: {
+      borderRadius: "50%",
+      backgroundColor: color,
+      mixBlendMode: "difference",
+      boxShadow: "0 0 10px rgba(0,0,0,0.2)",
+    },
+    2: {
+      borderRadius: "50%",
+      backgroundColor: "transparent",
+      border: `1px solid ${color}`,
+      backdropFilter: "blur(2px)",
+    },
+    3: {
+      borderRadius: "50%",
+      backgroundImage: `radial-gradient(${color} 30%, transparent 70%)`,
+    },
+  };
 
-        Object.assign(cursor.style, {
-            width,
-            height,
-            position: "absolute",
-            zIndex: 999,
-            pointerEvents: "none",
-            left: "0px",
-            top: "0px",
-            transform: "translate(-50%,-50%)",
-        });
+  Object.assign(cursor.style, {
+    width,
+    height,
+    position: "fixed", // fixed to avoid scroll issues
+    zIndex: 9999,
+    pointerEvents: "none",
+    left: "0px",
+    top: "0px",
+    transform: "translate(-50%, -50%)",
+  });
 
-        if (stylePresets[style]) {
-            Object.assign(cursor.style, stylePresets[style]);
-        }
+  if (stylePresets[style]) {
+    Object.assign(cursor.style, stylePresets[style]);
+  }
 
-        document.body.prepend(cursor);
+  document.body.prepend(cursor);
 
-        document.querySelector(wrapper).addEventListener("mousemove", (e) => {
-            gsap.to(cursor, {
-                left: e.clientX,
-                top: e.clientY,
-                ease: "power2.out",
-            });
-        });
-    }
+  const container = document.querySelector(wrapper);
+  if (!container) return console.warn(`[mousefollow] wrapper "${wrapper}" not found.`);
+
+  let mouse = { x: 0, y: 0 };
+
+  container.addEventListener("mousemove", (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  gsap.ticker.add(() => {
+    gsap.set(cursor, {
+      x: mouse.x,
+      y: mouse.y,
+    });
+  });
+}
+
 
     function magnetbutton(a) {
         const button = document.querySelectorAll(a);

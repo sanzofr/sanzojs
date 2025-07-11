@@ -50,7 +50,7 @@
         });
     }
 
-    function mousefollow({ width = "20px", height = "20px", color = "#000", style = 1 } = {}) {
+    function mousefollow({ width = "20px", height = "20px", color = "#000", style = 1, wrapper = "#main", } = {}) {
         if (document.querySelector(".cursor")) return;
 
         const cursor = document.createElement("div");
@@ -92,7 +92,7 @@
 
         document.body.prepend(cursor);
 
-        document.addEventListener("mousemove", (e) => {
+        document.querySelector(wrapper).addEventListener("mousemove", (e) => {
             gsap.to(cursor, {
                 left: e.clientX,
                 top: e.clientY,

@@ -92,7 +92,7 @@
 
         document.body.prepend(cursor);
 
-        window.addEventListener("mousemove", (e) => {
+        document.addEventListener("mousemove", (e) => {
             gsap.to(cursor, {
                 left: e.clientX,
                 top: e.clientY,

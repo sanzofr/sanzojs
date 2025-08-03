@@ -9,7 +9,7 @@ A lightweight utility library to add beautiful, interactive UI effects to your w
 ## 📦 Quick Start (CDN)
 
 ```html
-<script src="https://sanzojs.vercel.app/script.js"></script>
+<script src="https://unpkg.com/sanzo-js@2.0.0/sanzo.js"></script>
 ```
 
 
